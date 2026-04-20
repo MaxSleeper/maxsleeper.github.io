@@ -1,0 +1,127 @@
+/*
+  Author: Maxwell Sleeper
+  File: style.css
+  Date created: 2/20/26
+  Date last edited: 3/27/26
+  Version: 2
+*/
+body {
+    background-color: lavender;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* HEADER */
+#header {
+    background-color: cadetblue ;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+#logo {
+    width: 70px;
+    display: block;
+    margin: auto;
+}
+
+h1 {
+    margin: 5px 0;
+}
+
+/* FORM AREA */
+#main {
+    padding: 20px;
+}
+
+table {
+    margin: auto;
+    background-color: gainsboro;
+    border-collapse: collapse;
+    width: 750px;
+}
+
+th {
+    background-color: dimgray;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+}
+
+td {
+    padding: 8px;
+    vertical-align: top;
+}
+
+input, select, textarea {
+    padding: 4px;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+}
+
+#body h2 {
+    text-align: center;
+}
+
+/* BUTTONS */
+input[type="submit"],
+input[type="reset"],
+button {
+    background-color: dimgray;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+button:hover {
+    background-color: black;
+}
+
+/* ERROR MESSAGES */
+.errmsg {
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-top: 2px;
+}
+
+/* REVIEW TABLE */
+.reviewTable {
+    width: 90%;
+    margin: 15px auto;
+    border-collapse: collapse;
+    background-color: #f0f0f0;
+}
+
+.reviewTable th, .reviewTable td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.reviewTable th {
+    background-color: dimgray;
+    color: white;
+}
+
+.ok {
+    color: green;
+    font-weight: bold;
+}
+
+/* FOOTER */
+#footer {
+    background-color: cadetblue;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}
