@@ -1,0 +1,216 @@
+<!doctype html>
+
+<!--
+    Author: Maxwell Sleeper
+    File: patient-form.html
+    Date Created: 4/18/26
+    Date Last Edited: 4/20/26
+    Version: 3
+    Description: Patient intake form with validation and review panel, and instant validation.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sleeper's Snake Oils & Miracle Cures - Patient Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="header">
+    <img src="ElixirLogo.jpg" alt="Medical Logo" id="logo">
+    <h1>Sleeper's Snake Oils &amp; Miracle Cures</h1>
+    <p>Today is: <span id="today"></span></p>
+</div>
+
+<hr>
+
+<div id="main">
+<form id="regForm" action="thankyou.html" onreset="removeReview()" onsubmit="return false;">
+
+<table>
+<tr>
+    <th colspan="3">Patient Registration Form</th>
+</tr>
+
+<!-- NAME -->
+<tr>
+    <td>Name:</td>
+    <td>
+        <input type="text" id="fname" placeholder="First Name" required
+            minlength="1" maxlength="30"
+            pattern="[A-Za-z'\-]+"
+            title="1-30 letters, apostrophes or dashes only"
+            oninput="validateName()" onblur="validateName()">
+
+        <input type="text" id="mi" placeholder="MI" maxlength="1"
+            pattern="[A-Za-z]"
+            title="Optional, 1 letter only"
+            oninput="validateMI()" onblur="validateMI()">
+
+        <input type="text" id="lname" placeholder="Last Name" required
+            minlength="1" maxlength="30"
+            pattern="[A-Za-z'\-]+"
+            title="1-30 letters, apostrophes or dashes only"
+            oninput="validateName()" onblur="validateName()">
+
+        <span class="errmsg" id="name_text"></span>
+        <span class="errmsg" id="mi_text"></span>
+    </td>
+    <td class="hint">
+        Enter first name, optional middle initial, and last name.
+    </td>
+</tr>
+
+<!-- DOB -->
+<tr>
+    <td>Date of Birth:</td>
+    <td>
+        <input type="date" id="dob" required
+            title="Must not be in the future or more than 120 years ago"
+            oninput="validateDOB()" onblur="validateDOB()">
+
+        <span class="errmsg" id="dob_text"></span>
+    </td>
+    <td class="hint">Must be between today and 120 years ago.</td>
+</tr>
+
+<!-- SSN -->
+<tr>
+    <td>Social Security:</td>
+    <td>
+        <input type="password" id="ssn" placeholder="XXX-XX-XXXX"
+            maxlength="11"
+            pattern="\d{3}-\d{2}-\d{4}"
+            title="9 digits, formatted automatically as XXX-XX-XXXX"
+            oninput="formatSSN(this); validateSSN()" onblur="validateSSN()">
+
+        <span class="errmsg" id="ssn_text"></span>
+    </td>
+    <td class="hint">Enter 9 digits — dashes added automatically.</td>
+</tr>
+
+<!-- EMAIL -->
+<tr>
+    <td>Email:</td>
+    <td>
+        <input type="text" id="email"
+            pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+            title="Format: name@domain.com"
+            oninput="this.value=this.value.toLowerCase(); validateEmail()" onblur="validateEmail()">
+
+        <span class="errmsg" id="email_text"></span>
+    </td>
+    <td class="hint">Must be in format: name@domain.tld</td>
+</tr>
+
+<!-- PHONE -->
+<tr>
+    <td>Phone:</td>
+    <td>
+        <input type="text" id="phone" placeholder="000-000-0000"
+            pattern="\d{3}-\d{3}-\d{4}"
+            title="Format: 000-000-0000"
+            oninput="validatePhone()" onblur="validatePhone()">
+
+        <span class="errmsg" id="phone_text"></span>
+    </td>
+    <td class="hint">Format: 000-000-0000</td>
+</tr>
+
+<!-- ADDRESS -->
+<tr>
+    <td>Address:</td>
+    <td>
+        <input type="text" id="addr1" placeholder="Address Line 1" required
+            minlength="2" maxlength="30"
+            title="Required, 2-30 characters"
+            oninput="validateAddress()" onblur="validateAddress()">
+
+        <input type="text" id="addr2" placeholder="Address Line 2 (optional)"
+            minlength="2" maxlength="30"
+            title="Optional, 2-30 characters if entered"
+            oninput="validateAddress2()" onblur="validateAddress2()">
+
+        <span class="errmsg" id="addr1_text"></span>
+        <span class="errmsg" id="addr2_text"></span>
+    </td>
+    <td class="hint">Line 2 is optional. If entered, must be 2-30 chars.</td>
+</tr>
+
+<!-- CITY / STATE / ZIP -->
+<tr>
+    <td>City / State / Zip:</td>
+    <td>
+        <input type="text" id="city" placeholder="City"
+            minlength="2" maxlength="30"
+            pattern="[A-Za-z' \-]+"
+            title="Letters, spaces, apostrophes or dashes only"
+            oninput="validateCity()" onblur="validateCity()">
+
+        <select id="state" oninput="validateState()" onblur="validateState()">
+            <option value="">-- State --</option>
+            <option value="AL">Alabama</option>
+            <!-- rest unchanged -->
+        </select>
+
+        <input type="text" id="zip" placeholder="Zip"
+            minlength="5" maxlength="5"
+            pattern="\d{5}"
+            title="5 digit zip code"
+            oninput="validateZip()" onblur="validateZip()">
+
+        <br>
+
+        <span class="errmsg" id="city_text"></span>
+        <span class="errmsg" id="state_text"></span>
+        <span class="errmsg" id="zip_text"></span>
+    </td>
+    <td class="hint">Select your state and enter a 5-digit zip code.</td>
+</tr>
+
+<!-- MEDICAL HISTORY -->
+<tr>
+    <td>Medical History:</td>
+    <td colspan="2">
+        Check all that apply:<br>
+        <label><input type="checkbox" name="Mumps"> Mumps</label><br>
+        <label><input type="checkbox" name="Measles"> Measles</label><br>
+        <label><input type="checkbox" name="Rubella"> Rubella</label><br>
+        <label><input type="checkbox" name="ChickenPox"> Chicken Pox</label><br>
+        <label><input type="checkbox" name="Covid19"> Covid-19</label><br>
+        <label><input type="checkbox" name="HeartDisease"> Heart Disease</label>
+    </td>
+</tr>
+
+<!-- BUTTONS -->
+<tr>
+    <td colspan="3" align="center">
+        <input type="reset" value="CLEAR AND START OVER">
+        <input type="button" id="reviewBtn" value="REVIEW DATA" onclick="reviewData()">
+        <input type="button" value="VALIDATE" onclick="validateForm()">
+        <input type="submit" id="submitBtn" value="SUBMIT" style="display:none;">
+    </td>
+</tr>
+
+</table>
+</form>
+</div>
+
+<hr>
+
+<div id="footer">
+    Sleeper's Snake Oils &amp; Miracle Cures | Houston, TX
+
+    <a href="https://redballmarketglobal.us/" target="_blank">
+        <button id="btn" type="button">Contact Us</button>
+    </a>
+</div>
+
+<script src="assignment3.js"></script>
+<script>
+    document.getElementById("today").innerHTML = new Date().toDateString();
+</script>
+
+</body>
+</html>
